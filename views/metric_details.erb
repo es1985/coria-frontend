@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="row">
+    <h1 class="text-center"><%= @metric_name %></h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1" id="metric_histogram">
+
+  </div>
+  <script src="/js/histogram.js"></script>
+</div>
+
+<div class="row">
+  <div class="metric_slider col-md-10 col-md-offset-1">
+    <% @nodes.each do |node| 
+      name = node[0]
+      value = node[1].to_f
+      %>
+      <p class="metric_text text-center">
+        <a href="/node/<%= name %>"><span class="list_heading label label-default">Node <%= name %> <span class="glyphicon glyphicon-link"></span></span></a>
+      </p>
+      
+
+      <div class="metric_bar">
+        <div class="progress">
+          <div class="progress-bar progress-bar-<%= Node.color_type_by_value(value).to_s %>" role="progressbar" aria-valuenow="<%= value*100 %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= value*100 %>%;">
+            <span class="sr-only"><%= value*100.round(2) %>%</span>
+          </div>
+        </div>
+      </div>
+      <div class="text-center <%= Node.color_type_by_value(value).to_s %>">
+        <p><%= (value*100).round(2) %>%</p>
+      </div>
+
+    <% end %>
+    
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <%= will_paginate @nodes %>
+  </div>
+</div>
+
+
+
+

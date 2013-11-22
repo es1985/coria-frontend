@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= @title %></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cyborg/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/application.css">
+
+    <script src="/js/jquery-2.0.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script src="/js/d3.min.js"></script>
+    
+    <script src="/js/application.js"></script>
+  </head>
+  <body>
+    <div id="menu">
+      <div class="input-group input-group-lg pull-left">
+        <form name="node_id_form" action="/node" method="post">
+          <input id="node_id_field" name="node_id" type="text" class="form-control input-lg" placeholder="Metrics for Node ID">
+        </form>
+
+      </div>
+      <div class="btn-group pull-right">
+        <button class="btn btn-default btn-lg btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+         <span class="glyphicon glyphicon-list-alt"></span> List By Metrics
+        </button>
+        <ul class="dropdown-menu">
+          <% Node.metric_names.each do |metric,name| %>
+            <li><a href="/metric/<%= metric %>/"><%= name %></a></li>
+          <% end %>
+          <li class="divider">
+          <% Node.score_names.each do |score,name| %>
+            <li><a href="/metric/<%= score %>/"><%= name %></a></li>
+          <% end %>
+        </ul>
+      </div>
+
+    </div>
+    <div class="container" id="main">
+      <%= yield %>
+    </div>
+  </body>
+  
+</html>

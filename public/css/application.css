@@ -1,0 +1,109 @@
+body {
+  margin: 12px;
+}
+
+h1 {
+  color: #2a9fd6;
+}
+
+#main {
+  padding-top: 60px;
+}
+
+#graph {
+  background-color: #3c3c3c;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.progress {
+  margin-bottom: 0px;
+}
+.metric_bar {
+  padding-bottom: 0px;
+}
+
+.metric_text {
+  margin-top: 18px;
+  margin-bottom: 6px;
+}
+
+.metric_slider {
+  margin-top: 12px;
+  padding-bottom: 180px;
+  background-color: #3c3c3c;
+
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.metric_value_display {
+  color: #2a9fd6;
+}
+
+.default {
+  background-color: #2a9fd6;
+  border-color: #2a9fd6;
+}
+
+.success {
+  color: #77b300;
+}
+
+.info {
+  color: #93c;
+}
+
+.warning {
+  color: #f80;
+}
+
+.danger {
+  color: #c00;
+}
+
+.score_value {
+  font-size: 24px;
+}
+
+.list_heading {
+  font-size: 18px;
+  margin-bottom: 3px;
+}
+
+.test_circle {
+  border-color: #2a9fd6;
+  border: 1px;
+}
+
+
+.link {
+  stroke: #ccc;
+}
+
+.node text {
+  fill: #000;
+  pointer-events: none;
+  font: 12px sans-serif;
+}
+
+
+
+.bar rect {
+  fill: #2a9fd6;
+  shape-rendering: crispEdges;
+}
+
+.bar text {
+  fill: #fff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.tick text {
+  stroke: #2a9fd6;
+}
