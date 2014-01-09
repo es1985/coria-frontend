@@ -1,104 +1,84 @@
 <div class="row">
-    <h1 class="text-center">Details for Node <%= @node.data[:id] %></h1>
+    <h1 class="text-center">Details for Node <%= @node.id %></h1>
 </div>
 
-
-
-<div id="carousel-example-generic" class="carousel slide">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-  </ol>
-
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    
-    <!-- NORMALIZED -->
-    <div class="item active metric_slider col-md-8 col-md-offset-2">
-      <div class="carousel-caption">
-        <div class="alert default">
-          <strong>Normalized Node Metrics</strong>
-        </div>
-      </div>
-
-      <% Node.metric_names.each do |metric,name| %>
-        <% metric_normalized = metric+'_normalized' %>
-        <p class="metric_text text-center">
-          <a href="/metric/<%= metric %>/"><span class="list_heading label label-default"><%= name %> <span class="glyphicon glyphicon-link"></span></span></a>
-        </p>
-        <div class="metric_bar">
-        <div class="progress">
-          <div class="progress-bar progress-bar-<%= @node.color_type(metric_normalized).to_s %>" role="progressbar" aria-valuenow="<%= @node.data[metric_normalized.to_sym]*100 %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @node.data[metric_normalized.to_sym]*100 %>%;">
-            <span class="sr-only"><%= @node.data[metric_normalized.to_sym]*100 %>%</span>
-          </div>
-        </div>
-        </div>
-        <div class="text-center <%= @node.color_type(metric_normalized).to_s %>">
-          <p><%= (@node.data[metric_normalized.to_sym]*100).round(2) %>%</p>
-        </div>
-      <% end %>
-      
-    </div>
-
-    <!-- ABSOLUTE -->
-    <div class="item metric_slider col-md-8 col-md-offset-2">
-      <div class="carousel-caption">
-        <div class="alert default">
-          <strong>Absolute Node Metrics</strong>
-        </div>
-      </div>
-
-      <% Node.metric_names.each do |metric,name| %>
-        <p class="metric_text text-center"><%= name %></p>
-        <p class="lead text-center metric_value_display"><%= @node.data[metric.to_sym] %></p>
-
-      <% end %>
-
-    </div>
-
-    <!-- SCORES -->
-    <div class="item metric_slider col-md-8 col-md-offset-2">
-      <div class="carousel-caption">
-        <div class="alert default">
-          <strong>Scores</strong>
-        </div>
-      </div>
-
-      <% Node.score_names.each do |score,name| %>
-
-
-        <p class="metric_text text-center">
-          <a href="/metric/<%= score %>/"><span class="list_heading label label-default"><%= name %> <span class="glyphicon glyphicon-link"></span></span></a>
-        </p>
-
-        <div class="metric_bar">
-        <div class="progress">
-          <div class="progress-bar progress-bar-<%= @node.color_type(score).to_s %>" role="progressbar" aria-valuenow="<%= @node.data[score.to_sym]*100 %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @node.data[score.to_sym]*100 %>%;">
-            <span class="sr-only"><%= @node.data[score.to_sym]*100 %>%</span>
-          </div>
-        </div>
-        </div>
-        <div class="score_value text-center <%= @node.color_type(score).to_s %>">
-          <p><%= (@node.data[score.to_sym]*100).round(2) %>%</p>
-        </div>
-      <% end %>
-
-    </div>
-</div>
-</div>
 <div class="row">
-  <h1 class="text-center">Node Neighborhood</h1>
+  <h2 class="text-center">Metric Values</h2>
+  <table class="table table-hover">
+    <tr>
+      <th>Metric</th>
+      <th>Absolute Value</th>
+      <th class="col-md-4">Normalized Value</th>
+      <th>[%]</th>
+    </tr>
+    <% @node.metrics.each do |metric,data| %>
+      <tr>
+        <td><a href="/metric/<%= metric %>/"><%= data[:name] %></a></td>
+        <td><%= data[:absolute].round(5) %></td>
+        <td>
+          <div class="metric_bar">
+          <div class="progress">
+            <div class="progress-bar progress-bar-<%= data[:color_class] %>" role="progressbar" aria-valuenow="<%= data[:normalized]*100 %>" aria-valuemin="0" aria-valuemax="100" style="width: 
+              <%= data[:normalized]*100 %>%;">
+              <span class="sr-only"><%= data[:normalized]*100 %>%</span>
+            </div>
+          </div>
+          </div>
+        </td>
+
+        <td>
+          <span class="<%= data[:color] %>">
+            <%= (data[:normalized]*100).round(2) %>%
+          </span>
+        </td>
+
+      </tr>
+    <% end %> 
+  </table>      
 </div>
+
+
 <div class="row">
-  <div class="col-md-8 col-md-offset-2" id="graph">
-    
-  </div>
+  <h2 class="text-center">Score Values</h2>
+  <table class="table table-hover">
+    <tr>
+      <th>Score</th>
+      <th class="col-md-4">Value</th>
+      <th>[%]</th>
+    </tr>
+    <% @node.scores.each do |score,data| %>
+      <tr>
+        <td><a href="/metric/<%= score %>/"><%= data[:name] %></a></td>
+        <td>
+          <div class="metric_bar">
+          <div class="progress">
+            <div class="progress-bar progress-bar-<%= data[:color_class] %>" role="progressbar" aria-valuenow="<%= data[:absolute]*100 %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= data[:absolute]*100 %>%;">
+              <span class="sr-only"><%= data[:absolute]*100 %>%</span>
+            </div>
+          </div>
+          </div>
+        </td>
+
+        <td>
+          <span class="<%= data[:color_class] %>">
+            <%= (data[:absolute]*100).round(2) %>%
+          </span>
+        </td>
+
+      </tr>
+    <% end %> 
+  </table>      
 </div>
+
+<div class="row">
+  <h2 class="text-center">Node Neighborhood</h2>
+  <div class="col-md-10 col-md-offset-1" id="graph">
+  </div>  
+</div>
+  
 
 <script type="text/javascript">
-  var node_id=<%= @node.data[:id] %>;
+  var node_id=<%= @node.id %>;
 </script>
 <script src="/js/fisheye.js"></script>
 <script src="/js/graph.js"></script>

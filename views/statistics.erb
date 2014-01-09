@@ -1,0 +1,105 @@
+<div class="row">
+    <h1 class="text-center">Statistical Information about the Dataset</h1>
+</div>
+
+<div class="row">
+      <h2 class="text-center">Absolute Metric Values</h2>
+      <table class="table table-hover">
+        <tr>
+          <th>Name</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+          <th>Mean</th>
+          <th>Median</th>
+          <th>Standard Deviation</th>
+        </tr>
+        <% @data_metrics_absolute.each do |metric,values| %>
+        <tr>
+          <td><a href="/metric/<%= metric%>/"><%= values['display_name'] %></a></td>
+          <td><%= values['min'].to_f.round(5) %></td>
+          <td><%= values['max'].to_f.round(5) %></td>
+          <td><%= values['average'].to_f.round(5) %></td>
+          <td><%= values['median'].to_f.round(5) %></td>
+          <td><%= values['standard_deviation'].to_f.round(5) %></td>
+        </tr>
+        <% end %>
+      </table>
+</div>
+
+<div class="row">
+      <h2 class="text-center">Normalized Metric Values</h2>
+      <table class="table table-hover">
+        <tr>
+          <th>Name</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+          <th>Mean</th>
+          <th>Median</th>
+          <th>Standard Deviation</th>
+        </tr>
+        <% @data_metrics_normalized.each do |metric,values| %>
+        <tr>
+          <td><a href="/metric/<%= metric%>/"><%= values['display_name'] %></a></td>
+          <td><%= values['min'].to_f.round(5) %></td>
+          <td><%= values['max'].to_f.round(5) %></td>
+          <td><%= values['average'].to_f.round(5) %></td>
+          <td><%= values['median'].to_f.round(5) %></td>
+          <td><%= values['standard_deviation'].to_f.round(5) %></td>
+        </tr>
+        <% end %>
+      </table>
+</div>
+
+<div class="row">
+      <h2 class="text-center">Score Values</h2>
+      <table class="table table-hover">
+        <tr>
+          <th>Name</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+          <th>Mean</th>
+          <th>Median</th>
+          <th>Standard Deviation</th>
+        </tr>
+        <% @data_scores.each do |score,values| %>
+        <tr>
+          <td><a href="/score/<%= score %>/"><%= values['display_name'] %></a></td>
+          <td><%= values['min'].to_f.round(5) %></td>
+          <td><%= values['max'].to_f.round(5) %></td>
+          <td><%= values['average'].to_f.round(5) %></td>
+          <td><%= values['median'].to_f.round(5) %></td>
+          <td><%= values['standard_deviation'].to_f.round(5) %></td>
+        </tr>
+        <% end %>
+      </table>
+</div>
+
+<div class="row">
+      <h2 class="text-center">Metric Pearson Correlation</h2>
+      <table class="table table-hover">
+        <tr>
+          <td>&nbsp;</td>
+          <% CONFIG.metric_names.each do |metric,name| %>
+            <td><a href="/metric/<%= metric%>/"><%= name %></a></td>
+          <% end %>
+        </tr>
+        <% CONFIG.metric_names.each do |metric1,name1| %>
+        <tr>
+          <td><a href="/metric/<%= metric1%>/"><%= name1 %></a></td>
+          <% CONFIG.metric_names.each do |metric2,name2| %>
+            <td>
+              <span class="confidence_tooltip" data-toggle="tooltip" data-placement="top" title="" 
+                      data-original-title="Confidence: <%= @data_correlations[metric1][:correlation][metric2][:confidence].to_f %>"
+                      style="color:<%= @data_correlations[metric1][:correlation][metric2][:color_code] %>">
+                <%= @data_correlations[metric1][:correlation][metric2][:correlation].to_f.round(2) %>
+              </span>
+            </td>
+          <% end %>
+        </tr>
+        <% end %>
+      </table>
+</div>
+
+<script type="text/javascript">
+  $(".confidence_tooltip").tooltip();
+</script>

@@ -1,14 +1,14 @@
 $(function() {
     
-  var width = 800,
-  height = 800
+  var width = 720,
+  height = 720
 
   var svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height)
 
   var fisheye = d3.fisheye.circular()
       .radius(120);
 
-  d3.json("/node/neighbors/"+node_id, function(error, json) {
+  d3.json("/node/"+node_id+"/neighbors.json", function(error, json) {
     if (error) return console.warn(error);
   
     var n = json.nodes.length;
@@ -51,7 +51,7 @@ $(function() {
         .attr("cy", function(d) { return d.y; })
         .attr("r", 4)
         .attr("fill", "#2a9fd6")
-        .attr("stroke", function(d) {return d.color;})
+        .attr("stroke", function(d) {return d.color_code;})
         .attr("stroke-width",3);
       
     node.append("text")

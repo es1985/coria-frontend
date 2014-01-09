@@ -22,17 +22,23 @@
         </form>
 
       </div>
-      <div class="btn-group pull-right">
+
+      <div class="btn-group btn-group-lg pull-right">
+
+        <button class="btn btn-default btn-lg btn-primary" type="button" onclick="window.location.href='/statistics/'">
+          <span class="glyphicon glyphicon-eye-open"></span> Statistics
+        </button>
+
         <button class="btn btn-default btn-lg btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
          <span class="glyphicon glyphicon-list-alt"></span> List By Metrics
         </button>
         <ul class="dropdown-menu">
-          <% Node.metric_names.each do |metric,name| %>
+          <% CONFIG.metric_names.each do |metric,name| %>
             <li><a href="/metric/<%= metric %>/"><%= name %></a></li>
           <% end %>
           <li class="divider">
-          <% Node.score_names.each do |score,name| %>
-            <li><a href="/metric/<%= score %>/"><%= name %></a></li>
+          <% CONFIG.score_names.each do |score,name| %>
+            <li><a href="/score/<%= score %>/"><%= name %></a></li>
           <% end %>
         </ul>
       </div>

@@ -3,11 +3,11 @@ require 'sinatra'
 
 require './config'
 require './storage'
-
-# bind to all accessable interfaces
+# bind to publicly accessable IP
 set :bind, '0.0.0.0'
 
 
+# INDEX / ROOT PATH
 require './index'
 
 require './node_routes'
