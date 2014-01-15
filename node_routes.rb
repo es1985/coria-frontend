@@ -6,7 +6,7 @@
 post('/node') do
   node_id = params[:node_id]
   if Storage.all_nodes.include?(node_id)
-    redirect '/node/'+node_id
+    redirect '/node/'+node_id+'/'
   else
     redirect '/'
   end
